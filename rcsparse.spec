@@ -65,7 +65,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
+%attr(755,root,root) %{_libdir}/lib*.so.*
 %attr(755,root,root) %ghost %{_libdir}/lib*.so.0
 
 %files devel
@@ -76,4 +76,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n python-rcsparse
 %defattr(644,root,root,755)
+%doc *.py
 %attr(755,root,root) %{py_sitedir}/*.so
