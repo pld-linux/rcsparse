@@ -10,7 +10,7 @@ Release:	0.%{snap}.1
 License:	BSD
 Group:		Libraries
 Source0:	%{name}-%{snap}.tar.bz2
-# Source0-md5:	b0fce6886163f58a6ba3816b9dc25e69
+# Source0-md5:	e4c5b909a9d3f4acc2f18f6b8bf954f0
 URL:		http://ww2.fs.ei.tum.de/~corecode/hg/rcsparse/
 BuildRequires:	libtool
 BuildRequires:	python-devel
