@@ -41,27 +41,26 @@ rcsparse Python bindings.
 %setup -q -n %{name}
 
 %build
-libtool --mode=compile %{__cc} %{rpmcppflags} %{rpmcflags} -shared -c rcsparse.c
-libtool --mode=link %{__cc} %{rpmldflags} -shared -o librcsparse.la -rpath %{_libdir} rcsparse.lo
+libtool --tag=CC --mode=compile %{__cc} %{rpmcppflags} %{rpmcflags} -shared -c rcsparse.c
+libtool --tag=CC --mode=link %{__cc} %{rpmldflags} -shared -o librcsparse.la -rpath %{_libdir} rcsparse.lo
 
-libtool --mode=compile %{__cc} %{rpmcppflags} %{rpmcflags} -I%{py_incdir} -shared -c py-rcsparse.c
-libtool --mode=link %{__cc} %{rpmldflags} -avoid-version -module -shared -o rcsparse.la -rpath %{py_sitedir} py-rcsparse.lo librcsparse.la
+libtool --tag=CC --mode=compile %{__cc} %{rpmcppflags} %{rpmcflags} -I%{py_incdir} -shared -c py-rcsparse.c
+libtool --tag=CC --mode=link %{__cc} %{rpmldflags} -avoid-version -module -shared -o rcsparse.la -rpath %{py_sitedir} py-rcsparse.lo librcsparse.la
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT{%{_libdir},%{py_sitedir},%{_includedir}/%{name}}
+libtool --mode=install install -p -c librcsparse.la $RPM_BUILD_ROOT%{_libdir}
+libtool --mode=install install -p -c rcsparse.la $RPM_BUILD_ROOT%{py_sitedir}
 
-libtool --mode=install install -c librcsparse.la $RPM_BUILD_ROOT%{_libdir}
-libtool --mode=install install -c rcsparse.la $RPM_BUILD_ROOT%{py_sitedir}
-
-install *.h $RPM_BUILD_ROOT%{_includedir}/%{name}
+cp -p *.h $RPM_BUILD_ROOT%{_includedir}/%{name}
+rm -f $RPM_BUILD_ROOT%{py_sitedir}/rcsparse.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
