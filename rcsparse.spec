@@ -1,7 +1,7 @@
 # TODO:
 # - ruby subpackage
 #
-%define	snap	20090405
+%define		snap	20090405
 Summary:	Library for parsing RCS files
 Summary(pl.UTF-8):	Moduł do analizy plików RCS
 Name:		rcsparse
@@ -64,16 +64,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so.*
-%attr(755,root,root) %ghost %{_libdir}/lib*.so.0
+%attr(755,root,root) %{_libdir}/librcsparse.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/librcsparse.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/librcsparse.so
+%{_libdir}/librcsparse.la
 %{_includedir}/%{name}
 
 %files -n python-rcsparse
 %defattr(644,root,root,755)
 %doc testmodule.py
-%attr(755,root,root) %{py_sitedir}/*.so
+%attr(755,root,root) %{py_sitedir}/rcsparse.so
