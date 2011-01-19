@@ -6,7 +6,7 @@ Summary:	Library for parsing RCS files
 Summary(pl.UTF-8):	Moduł do analizy plików RCS
 Name:		rcsparse
 Version:	0.1
-Release:	0.%{snap}.1
+Release:	0.%{snap}.2
 License:	BSD
 Group:		Libraries
 Source0:	%{name}-%{snap}.tar.bz2
@@ -42,10 +42,10 @@ rcsparse Python bindings.
 
 %build
 libtool --tag=CC --mode=compile %{__cc} %{rpmcppflags} %{rpmcflags} -shared -c rcsparse.c
-libtool --tag=CC --mode=link %{__cc} %{rpmldflags} -shared -o librcsparse.la -rpath %{_libdir} rcsparse.lo
+libtool --tag=CC --mode=link %{__cc} %{rpmldflags} %{rpmcflags} -shared -o librcsparse.la -rpath %{_libdir} rcsparse.lo
 
 libtool --tag=CC --mode=compile %{__cc} %{rpmcppflags} %{rpmcflags} -I%{py_incdir} -shared -c py-rcsparse.c
-libtool --tag=CC --mode=link %{__cc} %{rpmldflags} -avoid-version -module -shared -o rcsparse.la -rpath %{py_sitedir} py-rcsparse.lo librcsparse.la
+libtool --tag=CC --mode=link %{__cc} %{rpmldflags} %{rpmcflags} -avoid-version -module -shared -o rcsparse.la -rpath %{py_sitedir} py-rcsparse.lo librcsparse.la
 
 %install
 rm -rf $RPM_BUILD_ROOT
