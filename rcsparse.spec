@@ -16,6 +16,7 @@ License:	BSD
 Group:		Libraries
 Source0:	http://ww2.fs.ei.tum.de/~corecode/hg/rcsparse/archive/tip.tar.bz2#/%{name}.tbz2
 # Source0-md5:	360ad1d3e0410d30abea710ce758c396
+Patch0:		ruby19.patch
 URL:		http://ww2.fs.ei.tum.de/~corecode/hg/rcsparse/
 BuildRequires:	libtool
 %if %{with python}
@@ -23,7 +24,7 @@ BuildRequires:	python-devel
 BuildRequires:	rpm-pythonprov
 %endif
 %if %{with ruby}
-BuildRequires:	ruby >= 1:1.8.6
+BuildRequires:	ruby >= 1:1.9
 BuildRequires:	ruby-modules
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -61,6 +62,7 @@ rcsparse Ruby bindings.
 %prep
 %setup -qc
 mv %{name}-*/* .
+%patch0 -p1
 
 %build
 libtool --tag=CC --mode=compile %{__cc} %{rpmcppflags} %{rpmcflags} -fPIC -shared -c rcsparse.c

@@ -1,0 +1,68 @@
+two replaces:
+
+%s#RSTRING(\(.\+\))->ptr#RSTRING_PTR(\1)#
+%s#RSTRING(\(.\+\))->len#RSTRING_LEN(\1)#
+
+--- rcsparse-0.1/rb-rcsparse.c~	2009-08-07 01:21:50.000000000 +0300
++++ rcsparse-0.1/rb-rcsparse.c	2011-02-08 01:27:55.126541917 +0200
+@@ -170,9 +170,9 @@
+ 	Data_Get_Struct(self, struct rb_rcsfile, rb_rf);
+ 	rb_scan_args(argc, argv, "1", &fname);
+ 	SafeStringValue(fname);
+-	rb_rf->rf = rcsopen(RSTRING(fname)->ptr);
++	rb_rf->rf = rcsopen(RSTRING_PTR(fname));
+ 	if (rb_rf->rf == NULL)
+-		rb_sys_fail(RSTRING(fname)->ptr);
++		rb_sys_fail(RSTRING_PTR(fname));
+ 	rb_rf->symbols = Qnil;
+ 	return self;
+ }
+@@ -311,7 +311,7 @@
+ 
+ 	if (rb_scan_args(argc, argv, "01", &rev) == 1) {
+ 		StringValue(rev);
+-		revstr = RSTRING(rev)->ptr;
++		revstr = RSTRING_PTR(rev);
+ 	}
+ 	data = rcscheckout(rb_rf->rf, revstr, &len);
+ 	if (data == NULL)
+@@ -332,7 +332,7 @@
+ 
+ 	if (rb_scan_args(argc, argv, "01", &sym) == 1) {
+ 		StringValue(sym);
+-		symstr = RSTRING(sym)->ptr;
++		symstr = RSTRING_PTR(sym);
+ 	}
+ 	rev = rcsrevfromsym(rb_rf->rf, symstr);
+ 	if (rev == NULL)
+@@ -350,7 +350,7 @@
+ 	char *data;
+ 
+ 	StringValue(rev);
+-	data = rcsgetlog(rb_rf->rf, RSTRING(rev)->ptr);
++	data = rcsgetlog(rb_rf->rf, RSTRING_PTR(rev));
+ 	if (data == NULL)
+ 		return Qnil;
+ 	ret = rb_tainted_str_new2(data);
+@@ -378,8 +378,8 @@
+ 
+ 	StringValue(index);
+ 	s.rev = &st;
+-	st.str = RSTRING(index)->ptr;
+-	st.len = RSTRING(index)->len;
++	st.str = RSTRING_PTR(index);
++	st.len = RSTRING_LEN(index);
+ 	f = RB_FIND(rcsrevtree, rb_rcsfile_revs(self), &s);
+ 	if (f == NULL)
+ 		return Qnil;
+@@ -466,8 +466,8 @@
+ 
+ 	StringValue(index);
+ 	s.rev = &st;
+-	st.str = RSTRING(index)->ptr;
+-	st.len = RSTRING(index)->len;
++	st.str = RSTRING_PTR(index);
++	st.len = RSTRING_LEN(index);
+ 	f = RB_FIND(rcsrevtree, rb_rcsfile_revs(self), &s);
+ 	if (f == NULL)
+ 		return Qfalse;
