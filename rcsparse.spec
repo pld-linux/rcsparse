@@ -11,7 +11,7 @@ Summary:	Library for parsing RCS files
 Summary(pl.UTF-8):	Moduł do analizy plików RCS
 Name:		rcsparse
 Version:	0.1
-Release:	0.%{snap}.1
+Release:	0.%{snap}.%{rel}
 License:	BSD
 Group:		Libraries
 Source0:	http://ww2.fs.ei.tum.de/~corecode/hg/rcsparse/archive/tip.tar.bz2#/%{name}.tbz2
@@ -24,7 +24,7 @@ BuildRequires:	python-devel
 BuildRequires:	rpm-pythonprov
 %endif
 %if %{with ruby}
-BuildRequires:	ruby >= 1:1.9
+BuildRequires:	ruby >= 1:1.8
 BuildRequires:	ruby-modules
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
