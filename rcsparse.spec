@@ -24,7 +24,9 @@ BuildRequires:	python-devel
 BuildRequires:	rpm-pythonprov
 %endif
 %if %{with ruby}
+BuildRequires:	rpmbuild(macros) >= 1.272
 BuildRequires:	ruby >= 1:1.8
+BuildRequires:	ruby-devel
 BuildRequires:	ruby-modules
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
