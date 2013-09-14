@@ -6,7 +6,7 @@
 %bcond_without	ruby	# build ruby bindings
 
 %define		snap	20090807
-%define		rel		1
+%define		rel		2
 Summary:	Library for parsing RCS files
 Summary(pl.UTF-8):	Moduł do analizy plików RCS
 Name:		rcsparse
@@ -14,7 +14,7 @@ Version:	0.1
 Release:	0.%{snap}.%{rel}
 License:	BSD
 Group:		Libraries
-Source0:	http://ww2.fs.ei.tum.de/~corecode/hg/rcsparse/archive/tip.tar.bz2#/%{name}.tbz2
+Source0:	http://ww2.fs.ei.tum.de/~corecode/hg/rcsparse/archive/tip.tar.bz2?/%{name}.tbz2
 # Source0-md5:	360ad1d3e0410d30abea710ce758c396
 Patch0:		ruby19.patch
 URL:		http://ww2.fs.ei.tum.de/~corecode/hg/rcsparse/
@@ -24,10 +24,10 @@ BuildRequires:	python-devel
 BuildRequires:	rpm-pythonprov
 %endif
 %if %{with ruby}
-BuildRequires:	rpmbuild(macros) >= 1.272
+BuildRequires:	rpm-rubyprov
+BuildRequires:	rpmbuild(macros) >= 1.665
 BuildRequires:	ruby >= 1:1.8
 BuildRequires:	ruby-devel
-BuildRequires:	ruby-modules
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -45,8 +45,8 @@ Header files and develpment documentation for rcsparse.
 %package -n python-rcsparse
 Summary:	rcsparse Python bindings
 Group:		Development/Languages/Python
-%pyrequires_eq  python
 Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	python
 
 %description -n python-rcsparse
 rcsparse Python bindings.
@@ -76,7 +76,8 @@ libtool --tag=CC --mode=link %{__cc} %{rpmldflags} %{rpmcflags} -avoid-version -
 %endif
 
 %if %{with ruby}
-%{__ruby} extconf.rb
+%{__ruby} extconf.rb \
+	--vendor
 %{__make} -j1 \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags} -fPIC"
@@ -128,5 +129,5 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with ruby}
 %files -n ruby-rcsparse
 %defattr(644,root,root,755)
-%attr(755,root,root) %{ruby_sitearchdir}/rcsfile.so
+%attr(755,root,root) %{ruby_vendorarchdir}/rcsfile.so
 %endif
