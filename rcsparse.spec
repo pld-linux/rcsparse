@@ -6,7 +6,7 @@
 %bcond_without	ruby	# build ruby bindings
 
 %define		snap	20090807
-%define		rel		2
+%define		rel		3
 Summary:	Library for parsing RCS files
 Summary(pl.UTF-8):	Moduł do analizy plików RCS
 Name:		rcsparse
