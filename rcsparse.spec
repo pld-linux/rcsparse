@@ -64,7 +64,7 @@ rcsparse Ruby bindings.
 %prep
 %setup -qc
 mv %{name}-*/* .
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 libtool --tag=CC --mode=compile %{__cc} %{rpmcppflags} %{rpmcflags} -fPIC -shared -c rcsparse.c
